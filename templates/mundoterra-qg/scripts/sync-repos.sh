@@ -15,13 +15,20 @@ if [ ! -f "$REPOS_FILE" ]; then
   exit 1
 fi
 
+# git subtree exige working tree limpo
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "ERRO: working tree tem mudanças não commitadas."
+  echo "Commit ou stash antes de sincronizar."
+  git status --short
+  exit 1
+fi
+
 mkdir -p docs
 TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S')"
-echo "" >> "$LOG_FILE"
-echo "## Sync $TIMESTAMP" >> "$LOG_FILE"
 
 SUCESSOS=0
 FALHAS=0
+RESULTADOS=()
 
 while IFS='|' read -r NOME ORIGEM BRANCH; do
   # Pular comentários e linhas vazias
@@ -32,21 +39,28 @@ while IFS='|' read -r NOME ORIGEM BRANCH; do
 
   if [ ! -d "repos/$NOME" ]; then
     echo "  ⚠  $NOME: pasta repos/$NOME não existe — pulando"
-    echo "- ⚠ $NOME: pasta não existe" >> "$LOG_FILE"
+    RESULTADOS+=("- ⚠ $NOME: pasta não existe")
     continue
   fi
 
   echo "==> Sincronizando '$NOME' de $ORIGEM ($BRANCH)..."
   if git subtree pull --prefix="repos/$NOME" "$ORIGEM" "$BRANCH" --squash 2>&1 | tail -5; then
     echo "  ✓ $NOME atualizado"
-    echo "- ✓ $NOME ($ORIGEM @ $BRANCH)" >> "$LOG_FILE"
+    RESULTADOS+=("- ✓ $NOME ($ORIGEM @ $BRANCH)")
     SUCESSOS=$((SUCESSOS + 1))
   else
     echo "  ✗ $NOME falhou"
-    echo "- ✗ $NOME — verificar conflitos" >> "$LOG_FILE"
+    RESULTADOS+=("- ✗ $NOME — verificar conflitos")
     FALHAS=$((FALHAS + 1))
   fi
 done < "$REPOS_FILE"
+
+# Escrever log apenas no final (depois dos subtree pulls)
+{
+  echo ""
+  echo "## Sync $TIMESTAMP"
+  printf '%s\n' "${RESULTADOS[@]}"
+} >> "$LOG_FILE"
 
 echo ""
 echo "==> Sync concluído: $SUCESSOS sucesso(s), $FALHAS falha(s)"
