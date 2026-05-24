@@ -19,10 +19,11 @@ Cada `repos/<projeto>/` é independente — tem seu próprio `package.json`, tes
 
 ## Antes de qualquer mudança
 
-1. Identifique em qual repo a mudança se aplica (`repos/<nome>/`).
-2. Leia o `README.md` e qualquer `CLAUDE.md` do projeto.
-3. Rode os testes do projeto se existirem.
-4. Use commits pequenos e atômicos.
+1. **`git pull origin main`** — o QG é sincronizado entre máquinas (desktop/notebook); sempre puxe antes de começar para não divergir. Ver `docs/runbook-sync.md`.
+2. Identifique em qual repo a mudança se aplica (`repos/<nome>/`).
+3. Leia o `README.md` e qualquer `CLAUDE.md` do projeto.
+4. Rode os testes do projeto se existirem.
+5. Use commits pequenos e atômicos.
 
 ## Secrets
 

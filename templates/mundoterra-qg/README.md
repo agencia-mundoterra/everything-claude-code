@@ -72,6 +72,12 @@ bash scripts/add-repo.sh app https://github.com/mundoterra/app.git
 bash scripts/sync-repos.sh
 ```
 
+## Usar em várias máquinas (desktop + notebook)
+
+O QG roda em cópia independente por máquina, sincronizadas via git (`git pull`
+ao começar, `git push` ao terminar). Passo a passo completo em
+[`docs/runbook-sync.md`](docs/runbook-sync.md).
+
 ## Slash commands úteis
 
 - `/qg-status` — visão geral do QG (repos, MCPs ativos, último sync)
