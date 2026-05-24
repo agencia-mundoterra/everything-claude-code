@@ -57,6 +57,9 @@ VERCEL_TOKEN=
 # Notion (se usando self-hosted)
 NOTION_API_KEY=
 
+# Exa (busca web)
+EXA_API_KEY=
+
 # OpenAI / Anthropic (se necessário para apps)
 OPENAI_API_KEY=
 ANTHROPIC_API_KEY=

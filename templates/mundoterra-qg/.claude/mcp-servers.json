@@ -24,31 +24,47 @@
       "env": {
         "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
       },
-      "description": "Supabase database operations"
+      "description": "Supabase — banco de dados de produção"
     },
     "notion": {
       "type": "http",
       "url": "https://mcp.notion.com/mcp",
-      "description": "Notion workspace — pages, databases, comments"
+      "description": "Notion — base de conhecimento, tarefas, docs"
+    },
+    "exa": {
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "${EXA_API_KEY}"
+      },
+      "description": "Busca e pesquisa na web via Exa"
+    },
+    "cloudflare-observability": {
+      "type": "http",
+      "url": "https://observability.mcp.cloudflare.com/mcp",
+      "description": "Cloudflare — logs e observabilidade"
     },
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp@latest"],
-      "description": "Live documentation lookup"
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp", "--browser", "chrome"],
-      "description": "Browser automation"
-    },
-    "vercel": {
-      "type": "http",
-      "url": "https://mcp.vercel.com",
-      "description": "Vercel deployments"
+      "description": "Documentação de bibliotecas ao vivo"
     }
   },
+  "_connectors_claude_ai": {
+    "_nota": "Estes você usa hoje como CONECTORES gerenciados no claude.ai (web/desktop). Para habilitar no Claude Code CLI, rode 'claude mcp add' ou adicione aqui quando tiver o endpoint/comando. Não foram preenchidos automaticamente para não inventar credenciais.",
+    "gmail": "E-mail — drafts, labels, threads",
+    "google-calendar": "Agenda — eventos, disponibilidade",
+    "google-drive": "Arquivos — buscar, ler, criar",
+    "canva": "Design — criar e exportar artes",
+    "gamma": "Apresentações e documentos AI",
+    "wix": "Site Wix — APIs e gestão",
+    "coupler": "Coupler.io — integração e analytics de dados",
+    "base44": "Base44 — app builder",
+    "media-gen": "Geração de imagem/vídeo + virality predictor"
+  },
   "_comments": {
-    "env_vars": "Set in secrets/.env: GITHUB_PAT, SUPABASE_PROJECT_REF, SUPABASE_ACCESS_TOKEN",
-    "tip": "Keep ≤10 MCPs ativos para preservar context window"
+    "env_vars": "Defina em secrets/.env: GITHUB_PAT, SUPABASE_PROJECT_REF, SUPABASE_ACCESS_TOKEN, EXA_API_KEY",
+    "tip": "Mantenha ≤10 MCPs ativos por sessão para preservar o context window. Habilite conectores sob demanda.",
+    "como_adicionar_conector": "claude mcp add <nome> --transport http <url>   (ou edite este arquivo)"
   }
 }
