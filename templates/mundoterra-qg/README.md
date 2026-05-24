@@ -44,13 +44,16 @@ claude
 
 Recomendado: **Tailscale** + SSH.
 
+Use o script (instala o Tailscale, sobe a tailnet e habilita SSH):
+
 ```bash
-# Na máquina onde está o QG
-curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up
+# Na máquina onde está o QG (servidor/desktop sempre ligado)
+bash scripts/setup-vpn.sh                 # hostname padrão: mundoterra-qg
+# ou com hostname custom:
+bash scripts/setup-vpn.sh meu-servidor
 
 # De qualquer outro device autenticado na sua tailnet
-ssh seu-usuario@nome-da-maquina
+ssh seu-usuario@mundoterra-qg
 cd ~/mundoterra-qg && claude
 ```
 
